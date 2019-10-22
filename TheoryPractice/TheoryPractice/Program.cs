@@ -67,7 +67,12 @@ namespace TheoryPractice
                 var inModule = true;
                 var module = (Module)Activator.CreateInstance(selectedModule.Module);
 
-                while(inModule)
+                if (module.HasResult)
+                {
+                  Console.WriteLine(module.GetResult());
+                }
+
+                while (inModule)
                 {
                   try
                   {
@@ -81,7 +86,7 @@ namespace TheoryPractice
                         module.ReadInput(moduleInput);
                         if (module.HasResult)
                         {
-                          Console.WriteLine(module.GetResult);
+                          Console.WriteLine(module.GetResult());
                         }
                         break;
                     }

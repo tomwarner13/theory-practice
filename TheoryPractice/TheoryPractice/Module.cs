@@ -14,6 +14,11 @@ namespace TheoryPractice
 
     public bool HasResult => !string.IsNullOrEmpty(Output);
 
-    public string GetResult => Output;
+    public string GetResult()
+    {
+      var result = Output;
+      Output = null;
+      return result;
+    }
   }
 }
