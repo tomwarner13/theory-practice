@@ -44,16 +44,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module.cs" />
+    <Compile Include="Modules\BstTester.cs" />
     <Compile Include="Modules\HashTableTester.cs" />
     <Compile Include="Modules\LinkedListTester.cs" />
+    <Compile Include="Modules\MergeSortTester.cs" />
+    <Compile Include="Modules\QuickSortTester.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UselessModule.cs" />
+    <Compile Include="Modules\UselessModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Algos\Algos.csproj">
+      <Project>{B901AB81-6674-460D-A506-4BFECC4B1DAC}</Project>
+      <Name>Algos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Schema\Schema.csproj">
       <Project>{B98E0195-CA7B-48A1-A3FE-9681EB623778}</Project>
       <Name>Schema</Name>

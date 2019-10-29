@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <Folder Include="Graphs\" />
-    <Folder Include="Trees\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Algos\Algos.csproj" />
   </ItemGroup>
 
 </Project>

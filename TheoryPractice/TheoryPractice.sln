@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheoryPractice", "TheoryPractice\TheoryPractice.csproj", "{6A6E1A76-1075-40A4-B3F6-AC2053896968}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schema", "Schema\Schema.csproj", "{B98E0195-CA7B-48A1-A3FE-9681EB623778}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schema", "Schema\Schema.csproj", "{B98E0195-CA7B-48A1-A3FE-9681EB623778}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algos", "Algos\Algos.csproj", "{B901AB81-6674-460D-A506-4BFECC4B1DAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B98E0195-CA7B-48A1-A3FE-9681EB623778}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B98E0195-CA7B-48A1-A3FE-9681EB623778}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B98E0195-CA7B-48A1-A3FE-9681EB623778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B901AB81-6674-460D-A506-4BFECC4B1DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B901AB81-6674-460D-A506-4BFECC4B1DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B901AB81-6674-460D-A506-4BFECC4B1DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B901AB81-6674-460D-A506-4BFECC4B1DAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

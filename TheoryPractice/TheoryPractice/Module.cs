@@ -20,5 +20,12 @@ namespace TheoryPractice
       Output = null;
       return result;
     }
+
+    protected int[] ParseIntArray(string input)
+    {
+      if (string.IsNullOrWhiteSpace(input)) return new int[0];
+
+      return input.Split(' ').Where(s => !string.IsNullOrWhiteSpace(s)).Select(int.Parse).ToArray();
+    }
   }
 }
