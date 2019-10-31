@@ -8,13 +8,10 @@ namespace Schema.Trees
 {
   public class BinarySearchTree<T> where T : IComparable<T>
   {
-    public BSTNode<T> Root; //would it be better to store these as pointers to BSTs? huh?
+    public BSTNode<T> Root;
 
     public void Build(IList<T> values, ref int steps)
     {
-      //is there a better way to do this than add? must be cause that would give you a weird shaped tree depending on data order
-      //probably sort, then build from median of each side
-
       //dogfooding yo
       var sorted = MergeSort.Sort(values.ToArray(), ref steps);
 
@@ -37,13 +34,13 @@ namespace Schema.Trees
       if(parent.Value.CompareTo(valueToInsert) >= 0) //slide left in tie
       {
         parent.Left = new BSTNode<T>(valueToInsert);
-        BuildInternal(values.Take(midpoint - 1).ToList(), parent.Left, ref steps);
+        BuildInternal(values.Take(midpoint).ToList(), parent.Left, ref steps);
         BuildInternal(values.Skip(midpoint + 1).ToList(), parent.Left, ref steps);
       }
       else
       {
         parent.Right = new BSTNode<T>(valueToInsert);
-        BuildInternal(values.Take(midpoint - 1).ToList(), parent.Right, ref steps);
+        BuildInternal(values.Take(midpoint).ToList(), parent.Right, ref steps);
         BuildInternal(values.Skip(midpoint + 1).ToList(), parent.Right, ref steps);
       }
     }
@@ -80,31 +77,93 @@ namespace Schema.Trees
       }
     }
 
-    public bool Find(T needle, ref int steps)
+    public T Minimum(ref int steps)
     {
-      return FindInternal(needle, Root, ref steps);
+      return MinimumInternal(Root, ref steps).Min.Value;
     }
 
-    private bool FindInternal(T needle, BSTNode<T> node, ref int steps)
+    private (BSTNode<T> Min, BSTNode<T> Parent) MinimumInternal(BSTNode<T> root, ref int steps)
     {
       steps++;
-      if (node.Value.CompareTo(needle) == 0) return true;
+      BSTNode<T> parent = null;
+      var node = root;
+      while(node?.Left != null)
+      {
+        parent = node;
+        node = node.Left;
+        steps++;
+      }
+      return (node, parent);
+    }
+
+    public bool Find(T needle, ref int steps)
+    {
+      return FindInternal(needle, Root, ref steps) != null;
+    }
+
+    private BSTNode<T> FindInternal(T needle, BSTNode<T> node, ref int steps)
+    {
+      steps++;
+      if (node.Value.CompareTo(needle) == 0) return node;
 
       if(node.Value.CompareTo(needle) > 0)
       {
-        if (node.Left == null) return false;
+        if (node.Left == null) return null;
         return FindInternal(needle, node.Left, ref steps);
       }
       else
       {
-        if (node.Right == null) return false;
+        if (node.Right == null) return null;
         return FindInternal(needle, node.Right, ref steps);
       }
     }
     
     public bool Remove(T target, ref int steps)
     {
-      throw new NotImplementedException();
+      return RemoveInternal(target, Root, null, ref steps);
+    }
+
+    private bool RemoveInternal(T target, BSTNode<T> node, BSTNode<T> parentNode, ref int steps)
+    {
+      steps++;
+
+      if(target.CompareTo(node.Value) == 0) //found the node to remove
+      {
+        if(node.Left == null && node.Right == null) //no children, just kill it
+        {
+          if (node == parentNode.Left) parentNode.Left = null;
+          else parentNode.Right = null;
+        }
+        else if (node.Left != null && node.Right == null) //only left child
+        {
+          if (node == Root) Root = node.Left;
+          else if (node == parentNode.Left) parentNode.Left = node.Left;
+          else parentNode.Right = node.Left;
+        }
+        else if (node.Left == null && node.Right != null) //only right child
+        {
+          if (node == Root) Root = node.Right;
+          else if (node == parentNode.Left) parentNode.Left = node.Right;
+          else parentNode.Right = node.Right;
+        }
+        else //2 children so we need to replace this node with the next available value
+        {
+          var (Min, Parent) = MinimumInternal(node.Right, ref steps);
+          node.Value = Min.Value;
+          RemoveInternal(Min.Value, Min, Parent ?? node, ref steps);
+        }
+        return true;
+      }
+      else if(target.CompareTo(node.Value) < 0) //go left
+      {
+        if (node.Left == null) return false; //we haven't found a node to remove
+        return RemoveInternal(target, node.Left, node, ref steps);
+      }
+      else //go right
+      {
+        if (node.Right == null) return false; //we haven't found a node to remove
+        return RemoveInternal(target, node.Right, node, ref steps);
+      }
     }
 
     //TODO maybe: traverses? as review later on?

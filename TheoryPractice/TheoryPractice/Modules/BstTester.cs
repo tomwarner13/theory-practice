@@ -13,7 +13,7 @@ namespace TheoryPractice.Modules
 
     public BstTester()
     {
-      Output = "BST Tester: B: [ints] to build, F: [int] to find, A: [int] to add";
+      Output = "BST Tester: B: [ints] to build, F: [int] to find, A: [int] to add, M to find minimum, R: [int] to remove";
       _tree = new BinarySearchTree<int>();
     }
 
@@ -38,8 +38,16 @@ namespace TheoryPractice.Modules
           _tree.Add(int.Parse(parts[1]), ref steps);
           Output = $"steps: {steps}";
           break;
+        case "M":
+          var min = _tree.Minimum(ref steps);
+          Output = $"{min} : {steps}";
+          break;
+        case "R":
+          result = _tree.Remove(int.Parse(parts[1]), ref steps);
+          Output = $"{result} : {steps}";
+          break;
         default:
-          Output = $"invalid input: B: [ints] to build, F: [int] to find, A: [int] to add";
+          Output = $"invalid input: B: [ints] to build, F: [int] to find, A: [int] to add, M to find minimum, R: [int] to remove";
           break;
       }
     }

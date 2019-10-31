@@ -46,6 +46,7 @@
     <Compile Include="Module.cs" />
     <Compile Include="Modules\BstTester.cs" />
     <Compile Include="Modules\HashTableTester.cs" />
+    <Compile Include="Modules\HeapTester.cs" />
     <Compile Include="Modules\LinkedListTester.cs" />
     <Compile Include="Modules\MergeSortTester.cs" />
     <Compile Include="Modules\QuickSortTester.cs" />
