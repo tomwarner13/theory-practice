@@ -1,4 +1,5 @@
 ﻿using Algos.Sorts;
+using Schema.LinearStructures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,12 @@ namespace Schema.Trees
 
     public void Add(T value, ref int steps)
     {
+      if(Root == null)
+      {
+        Root = new BSTNode<T>(value);
+        steps++;
+        return;
+      }
       AddInternal(value, Root, ref steps);
     }
 
@@ -166,7 +173,76 @@ namespace Schema.Trees
       }
     }
 
-    //TODO maybe: traverses? as review later on?
+    public IEnumerable<T> DepthFirstTraverse() //should be in-order
+    {
+      var currentNode = Root;
+      BSTNode<T> previousNode = null;
+      var currentPath = new TomStack<BSTNode<T>>();
+
+      while(currentNode != null)
+      {
+        if (currentNode.Left != null && previousNode != currentNode.Left && (previousNode == null || previousNode != currentNode.Right))
+        {
+          currentPath.Push(currentNode);
+          previousNode = currentNode;
+          currentNode = currentNode.Left;
+        }
+        else if ((currentNode.Left == null || currentNode.Left == previousNode) && previousNode != currentNode.Right)
+        {
+          yield return currentNode.Value;
+          if (currentNode.Right != null)
+          {
+            currentPath.Push(currentNode);
+            previousNode = currentNode;
+            currentNode = currentNode.Right;
+          }
+          else if (currentPath.Count < 1) //just a root
+          {
+            currentNode = null;
+          }
+          else
+          {
+            previousNode = currentNode;
+            currentNode = currentPath.Pop();
+          }
+        }
+        else
+        {
+          if (currentNode.Right == null) yield return currentNode.Value;
+          previousNode = currentNode;
+          if (currentPath.Count > 0) currentNode = currentPath.Pop();
+          else currentNode = null;
+        }
+      }
+    }
+
+    public IEnumerable<T> BreadthFirstTraverse()
+    {
+      var currentNode = Root;
+      var queue = new TomQueue<BSTNode<T>>();
+
+      while(currentNode != null)
+      {
+        yield return currentNode.Value;
+        if(currentNode.Left != null)
+        {
+          queue.EnQueue(currentNode.Left);
+        }
+        if (currentNode.Right != null)
+        {
+          queue.EnQueue(currentNode.Right);
+        }
+
+        if(queue.Count > 0)
+        {
+          currentNode = queue.DeQueue();
+        }
+        else
+        {
+          currentNode = null;
+        }
+      }
+    }
   }
 
   public class BSTNode<T>

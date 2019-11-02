@@ -10,10 +10,11 @@ namespace TheoryPractice.Modules
   public class BstTester : Module
   {
     private BinarySearchTree<int> _tree;
+    private const string CommandText = "B: [ints] to build, F: [int] to find, A: [int] to add, M to find minimum, R: [int] to remove, D to DFT, T to BFT";
 
     public BstTester()
     {
-      Output = "BST Tester: B: [ints] to build, F: [int] to find, A: [int] to add, M to find minimum, R: [int] to remove";
+      Output = $"BST Tester: {CommandText}";
       _tree = new BinarySearchTree<int>();
     }
 
@@ -46,8 +47,20 @@ namespace TheoryPractice.Modules
           result = _tree.Remove(int.Parse(parts[1]), ref steps);
           Output = $"{result} : {steps}";
           break;
+        case "D":
+          foreach(var item in _tree.DepthFirstTraverse())
+          {
+            Output += $"{item} ";
+          }
+          break;
+        case "T":
+          foreach (var item in _tree.BreadthFirstTraverse())
+          {
+            Output += $"{item} ";
+          }
+          break;
         default:
-          Output = $"invalid input: B: [ints] to build, F: [int] to find, A: [int] to add, M to find minimum, R: [int] to remove";
+          Output = $"invalid input: {CommandText}";
           break;
       }
     }
