@@ -10,11 +10,12 @@ namespace TheoryPractice.Modules
   public class LinkedListTester : Module
   {
     private readonly QuickLinkedList<string> _list;
+    private const string InstructionText = "A:name to add, H:name to add at head, R:index to remove, P to print, B to print backwards, T to remove tail";
 
     public LinkedListTester()
     {
       _list = new QuickLinkedList<string>();
-      Output = "LIST TESTER: A:name to add, R:index to remove, P to print";
+      Output = $"LIST TESTER: {InstructionText}";
     }
 
     public override void ReadInput(string input)
@@ -28,6 +29,9 @@ namespace TheoryPractice.Modules
         case "A":
           _list.Add(parts[1]);
           break;
+        case "H":
+          _list.AddToHead(parts[1]);
+          break;
         case "R":
           _list.RemoveAt(int.Parse(parts[1]));
           break;
@@ -37,8 +41,17 @@ namespace TheoryPractice.Modules
             Output += i + " ";
           }
           break;
+        case "B":
+          foreach (var i in _list.ReadReverse())
+          {
+            Output += i + " ";
+          }
+          break;
+        case "T":
+          Output = _list.RemoveTail();
+          break;
         default:
-          Output = $"invalid input: A:name to add, R:index to remove, P to print";
+          Output = $"invalid input: {InstructionText}";
           break;
       }
     }
